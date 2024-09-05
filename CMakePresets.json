@@ -1,10 +1,13 @@
 {
-    "version": 3,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 21,
+        "minor": 25,
         "patch": 0
     },
+    "include": [
+        "CMakeDefaultPresets.json"
+    ],
     "configurePresets": [
         {
             "name": "gcc-11",
@@ -55,7 +58,8 @@
             "name": "cppcheck",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_CPPCHECK": "cppcheck;--enable=warning;--inconclusive;--force;--inline-suppr"
+                "CMAKE_CXX_CPPCHECK":
+                    "cppcheck;--enable=warning;--inconclusive;--force;--inline-suppr"
             }
         },
         {
@@ -70,7 +74,8 @@
             "name": "clang-tidy",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=${sourceDir}/*;-checks=-*,modernize-use-nullptr;-extra-arg=-std=c++17"
+                "CMAKE_CXX_CLANG_TIDY":
+                    "clang-tidy;--header-filter=${sourceDir}/*;-checks=-*,modernize-use-nullptr;-extra-arg=-std=c++17"
             }
         },
         {
@@ -84,7 +89,8 @@
             "name": "iwyu",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_INCLUDE_WHAT_YOU_USE": "iwyu;-Xiwyu;any;-Xiwyu;iwyu;-Xiwyu"
+                "CMAKE_CXX_INCLUDE_WHAT_YOU_USE":
+                    "iwyu;-Xiwyu;any;-Xiwyu;iwyu;-Xiwyu"
             }
         },
         {
@@ -192,7 +198,8 @@
                 "ci-ninja-debug"
             ],
             "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/.github/toolchain/clang-on-windows-toolchain.cmake"
+                "CMAKE_TOOLCHAIN_FILE":
+                    "${sourceDir}/.github/toolchain/clang-on-windows-toolchain.cmake"
             },
             "condition": {
                 "type": "equals",
@@ -261,6 +268,59 @@
                 "noTestsAction": "error",
                 "stopOnFailure": true
             }
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "Debug",
+            "configurePreset": "ci-msvc-19",
+            "generators": [
+                "TGZ"
+            ]
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "Release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "Release"
+                },
+                {
+                    "type": "build",
+                    "name": "Release"
+                },
+                {
+                    "type": "build",
+                    "name": "install"
+                },
+                {
+                    "type": "package",
+                    "name": "Release"
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "ci-msvc-19"
+                },
+                {
+                    "type": "build",
+                    "name": "ci-msvc-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "ci-unit-tests-debug"
+                },
+                {
+                    "type": "package",
+                    "name": "Debug"
+                }
+            ]
         }
     ]
 }

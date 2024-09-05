@@ -7,29 +7,35 @@ cmake_minimum_required(VERSION 3.21)
 
 include_guard(DIRECTORY)
 
-find_package(Git REQUIRED QUIET)
+find_package(
+    Git
+    REQUIRED
+    QUIET
+)
 
 macro(git_get_branch_name result_var_name)
     execute_process(
         COMMAND "${GIT_EXECUTABLE}" symbolic-ref -q --short HEAD
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         OUTPUT_VARIABLE ${result_var_name}
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_QUIET
+        OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET
     )
 endmacro()
 
-macro (git_get_head_commit_hash result_var_name)
+macro(git_get_head_commit_hash result_var_name)
     execute_process(
         COMMAND "${GIT_EXECUTABLE}" rev-parse --verify HEAD
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         OUTPUT_VARIABLE ${result_var_name}
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_QUIET
+        OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET
     )
 endmacro()
 
-macro (git_get_config_value config_key result_var_name)
+macro(
+    git_get_config_value
+    config_key
+    result_var_name
+)
     execute_process(
         COMMAND "${GIT_EXECUTABLE}" config --get ${config_key}
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"

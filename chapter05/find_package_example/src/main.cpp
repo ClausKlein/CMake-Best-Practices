@@ -13,7 +13,7 @@ int main(int, char**)
     SHA256_Update(&sha256, message.c_str(), message.size());
     SHA256_Final(hash, &sha256);
 
-    std::stringstream ss; 
+    std::stringstream ss;
     for(const auto& c : hash)
     {
         ss << std::hex << std::setw(2) << std::setfill('0') << (int)c;

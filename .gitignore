@@ -32,7 +32,9 @@
 *.app
 
 #IDE specific
+stagedir/
 build/
+.vs/
 .vscode
 .cache
 
@@ -60,7 +62,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
