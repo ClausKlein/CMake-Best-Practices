@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25...3.30)
 
 project(
     "Chapter_5"
@@ -15,11 +15,11 @@ project(
 add_subdirectory(find_package_example)
 add_subdirectory(find_module)
 add_subdirectory(fetch_content_example)
-add_subdirectory(external_project_example)
+# TODO: add_subdirectory(external_project_example)
 
-# Look for the conan command on the host system, if conan is not found
-# exclude all conan related examples from the proejct
-find_program(CONAN_EXECUTABLE conan)
+# Look for the conan command on the host system, if conan is not found exclude
+# all conan related examples from the project
+# FIXME: only for conan 1.x! find_program(CONAN_EXECUTABLE conan)
 
 if(CONAN_EXECUTABLE)
     add_subdirectory(conan_example)
@@ -32,9 +32,18 @@ endif()
 # exclude all vcpkg-related examples from the project
 find_program(VCPKG_EXECUTABLE vcpkg)
 
-# if vcpkg not found or toolchain file does not match vcpkg.cmake exclude the vcpkg example 
-if(NOT VCPKG_EXECUTABLE OR NOT CMAKE_TOOLCHAIN_FILE MATCHES "vcpkg.cmake$")
-  message(STATUS "vcpkg not found or vcpkg toolchain not set. Will not build vcpkg example")
+# if vcpkg not found or toolchain file does not match vcpkg.cmake exclude the
+# vcpkg example
+if(NOT VCPKG_EXECUTABLE
+   OR NOT
+      CMAKE_TOOLCHAIN_FILE
+      MATCHES
+      "vcpkg.cmake$"
+)
+    message(
+        STATUS
+            "vcpkg not found or vcpkg toolchain not set. Will not build vcpkg example"
+    )
 else()
     add_subdirectory(vcpkg_example)
 endif()

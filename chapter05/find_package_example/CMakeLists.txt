@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25...3.30)
 
 project(
     ch5_find_package_example
@@ -12,12 +12,15 @@ project(
     LANGUAGES CXX
 )
 
-# enable debuging for finding the package (For illustrative purposes)
+# enable debugging for finding the package (For illustrative purposes)
 # set(CMAKE_FIND_DEBUG_MODE TRUE )
 
-# Search the package OpenSSL and its component SSL, configuration fails if not found
-# because of the keyword REQUIRED
-find_package(OpenSSL REQUIRED COMPONENTS SSL)
+# Search the package OpenSSL and its component SSL, configuration fails if not
+# found because of the keyword REQUIRED
+find_package(
+    OpenSSL REQUIRED
+    COMPONENTS SSL
+)
 
 # disable debugging again set(CMAKE_FIND_DEBUG_MODE FALSE )
 

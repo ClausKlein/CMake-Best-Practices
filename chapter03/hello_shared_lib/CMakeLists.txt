@@ -1,10 +1,10 @@
 # Chapter3- example illustrating how to create a shared library
-# Additionally the example shows how to set a postfix for debug libraries and 
+# Additionally the example shows how to set a postfix for debug libraries and
 # how to handle symbol visibilities for shared libraries
 #
 # SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.25...3.30)
 
 project(
     ch3_hello_shared
@@ -77,6 +77,6 @@ target_include_directories(
     PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/export"
 )
 
-# An alternative but not recomended way export the symbols is to use
+# An alternative but not recommended way export the symbols is to use
 # set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE) Which exports all dll symbols by
 # default
